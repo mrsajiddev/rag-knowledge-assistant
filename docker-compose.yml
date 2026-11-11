@@ -1,0 +1,45 @@
+# Local stack: Qdrant + the assistant. Ollama runs on your machine (faster on
+# a Mac, where Docker has no GPU access), or start the optional container:
+#
+#   docker compose up -d qdrant                    # just the vector DB
+#   docker compose up -d --build                   # Qdrant + app (uses host Ollama)
+#   docker compose --profile ollama up -d --build  # also run Ollama in Docker
+#   docker compose run --rm app python -m app.ingest
+
+services:
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant_storage:/qdrant/storage
+    restart: unless-stopped
+
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      QDRANT_URL: http://qdrant:6333
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL_DOCKER:-http://host.docker.internal:11434}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - qdrant
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:latest
+    profiles: ["ollama"]
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+    restart: unless-stopped
+
+volumes:
+  qdrant_storage:
+  ollama_models:

@@ -1,0 +1,10 @@
+venv
+.venv
+.env
+.git
+.qdrant
+qdrant_storage
+__pycache__
+.pytest_cache
+.vercel
+docs

@@ -1,0 +1,24 @@
+[project]
+name = "nestora-assistant"
+version = "2.0.0"
+description = "Retrieval-augmented chat assistant: FastAPI + Qdrant + Ollama or any OpenAI-compatible LLM."
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "fastapi>=0.110,<1",
+    "uvicorn[standard]>=0.29",
+    "httpx>=0.27",
+    "qdrant-client>=1.12,<2",
+    "python-dotenv>=1.0",
+    "pypdf>=4.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+# Tells Vercel which FastAPI object to serve.
+[tool.vercel]
+entrypoint = "app.main:app"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

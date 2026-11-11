@@ -1,0 +1,10 @@
+venv
+.venv
+.qdrant
+qdrant_storage
+tests
+docs
+docker-compose.yml
+Dockerfile
+render.yaml
+Makefile

@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Secrets and local data
+.env
+.qdrant/
+qdrant_storage/
+
+# Editors and OS
+.DS_Store
+.idea/
+.vscode/
+
+# Vercel
+.vercel/
